@@ -1,0 +1,125 @@
+PaolaArdon/Salt-Pepper
+https://github.com/PaolaArdon/Salt-Pepper/blob/master/joy_pepper/scripts/joypepper.py
+
+sudo apt-get install ros-kinetic-driver-base ros-kinetic-move-base-msgs ros-kinetic-octomap ros-kinetic-octomap-msgs ros-kinetic-humanoid-msgs ros-kinetic-humanoid-nav-msgs ros-kinetic-camera-info-manager ros-kinetic-camera-info-manager-py
+sudo apt-get install ros-kinetic-pepper-robot ros-kinetic-pepper-meshes
+sudo apt-get install ros-kinetic-pepper-*
+sudo apt-get install ros-kinetic-naoqi-*
+sudo pip install rosdep				catkin_init_workspace
+sudo pip install --user netifaces
+sudo pip install --user defusedxml
+----
+
+roscore
+[new tab]
+. ~/catkin_ws/devel/setup.bash	
+roslaunch pepper_bringup pepper_full_py.launch nao_ip:="150.65.206.107" roscore_ip:="127.0.0.1"
+
+-----
+
+[new tab]
+robot@robot-Inspiron-3250:~$ rosrun pepper_recog recog.py
+
+Traceback (most recent call last):
+  File "/home/robot/Documents/catkin_ws/src/pepper_recog/src/recog.py", line 19, in <module>
+    from cv_bridge import CvBridge, CvBridgeError
+ImportError: cannot import name CvBridge
+robot@robot-Inspiron-3250:~/catkin_ws/src$ git clone https://github.com/ros-naoqi/naoqi_bridge.git
+/home/robot/catkin_ws/src/naoqi_bridge/naoqi_sensors_py/src
+robot@robot-Inspiron-3250:~/catkin_ws$ catkin_make
+
+AttributeError: 'module' object has no attribute 'cv' 
+cv2.CAP_PROP_FRAME_WIDTH
+https://github.com/rykov8/ssd_keras/issues/110
+
+AttributeError: 'module' object has no attribute 'SIFT'
+cv2.xfeatures2d.SIFT_create
+sift = cv2.xfeatures2d.SIFT_create(nfeatures=250)
+surf = cv2.xfeatures2d.SURF_create(800)
+https://github.com/Tes3awy/SIFT-Feature-matching-Using-OpenCV-Python/issues/1
+
+AttributeError: 'module' object has no attribute 'ORB'
+orb = cv2.ORB_create()
+https://stackoverflow.com/questions/31630559/attributeerror-module-object-has-no-attribute-orb
+
+OSError: [Errno 2] No such file or directory: '/home/cnx/catkin_ws/src/pepper_recog/src/models'
+/home/robot/catkin_ws/src/Salt-Pepper/pepper_recog/src/models
+
+RuntimeError: 	ALBroker::createBroker
+	Cannot connect to tcp://192.168.150.7:9559
+  ROBOT_IP     = "192.168.150.7"
+recog.py	line = 156
+----
+
+roscore
+[new tab]
+. ~/catkin_ws/devel/setup.bash	
+roslaunch pepper_bringup pepper_full_py.launch nao_ip:="150.65.206.107" roscore_ip:="127.0.0.1"
+
+-----
+ERROR: cannot launch node of type [pepper_sensors_py/laser.py]: can't locate node [laser.py] in package [pepper_sensors_py]
+ERROR: cannot launch node of type [pepper_sensors_py/camera.py]: can't locate node [camera.py] in package [pepper_sensors_py]
+ERROR: cannot launch node of type [pepper_sensors_py/camera.py]: can't locate node [camera.py] in package [pepper_sensors_py]
+
+https://github.com/turtlebot/turtlebot_create/issues/37
+
+roscd pepper_sensors_py
+git clone https://github.com/ros-naoqi/pepper_robot/tree/master/pepper_sensors_py
+sudo cp -a /home/robot/Desktop/Pae/pepper_robot-master/pepper_sensors_py /opt/ros/kinetic/share/pepper_sensors_py
+sudo cp -a /home/chong-lab/Desktop/pepper_robot/pepper_sensors_py /opt/ros/kinetic/share/pepper_sensors_py
+-----
+roscore
+. ~/catkin_ws/devel/setup.bash
+roslaunch pepper_bringup pepper_full_py.launch nao_ip:="150.65.206.107" roscore_ip:="127.0.0.1"
+
+export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/home/robot/ORB_SLAM2/Examples/ROS
+rosrun ORB_SLAM2 RGBD /home/robot/ORB_SLAM2/Vocabulary/ORBvoc.txt /home/chong-lab/catkin_ws/src/Salt-Pepper-master/orb_slam2/Examples/RGB-D/pepperCameraSettings.yaml /camera/rgb/image_raw:=/pepper_robot/camera/front/camera/image_raw camera/depth_registered/image_raw:=/pepper_robot/camera/depth/camera/image_raw
+
+$ rosnode list
+
+wget -O boost_1_54_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.gz/download
+tar xzvf boost_1_54_0.tar.gz
+cd boost_1_54_0/
+sudo apt-get update
+sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev libboost-all-dev
+./bootstrap.sh --prefix=/usr/
+./b2
+sudo ./b2 install 
+
+-------
+
+robot@robot-Inspiron-3250:~$ git clone https://github.com/raulmur/ORB_SLAM2.git ORB_SLAM2
+
+. ~/catkin_ws/devel/setup.bash
+
+roscd ORB_SLAM2
+chmod +x build.sh
+./build.sh
+
+****** [delete] /home/robot/catkin_ws/src/Salt-Pepper/orb_slam2
+robot@robot-Inspiron-3250:~/ORB_SLAM2$ echo $ROS_PACKAGE_PATH 
+robot@robot-Inspiron-3250:~/ORB_SLAM2$ ./build_ros.sh 
+
+
+-- ~~  - pangolin (plain cmake)
+
+https://github.com/stevenlovegrove/Pangolin
+robot@robot-Inspiron-3250:~$ git clone https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin
+mkdir build
+cd build
+cmake ..
+cmake --build .
+
+robot@robot-Inspiron-3250:~/Pangolin/build/examples/HelloPangolin$ ls
+CMakeFiles  cmake_install.cmake  HelloPangolin  Makefile
+robot@robot-Inspiron-3250:~/Pangolin/build/examples/HelloPangolin$ ./HelloPangolin 
+
+robot@robot-Inspiron-3250:~/Pangolin/build$ sudo make install				https://cmake.org/install/
+robot@robot-Inspiron-3250:~/catkin_ws$ catkin_make
+
+[rosrun] Couldn't find executable named RGBD below /home/robot/catkin_ws/src/Salt-Pepper/orb_slam2/Examples/ROS/ORB_SLAM2
+[rosrun] Found the following, but they're either not files,
+[rosrun] or not executable:
+[rosrun]   /home/robot/catkin_ws/src/Salt-Pepper/orb_slam2/Examples/ROS/ORB_SLAM2/RGBD
+chmod +x RGBD
